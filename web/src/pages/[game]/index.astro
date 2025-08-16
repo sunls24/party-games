@@ -1,0 +1,34 @@
+---
+import Layout from "@/layouts/Layout.astro"
+
+import DynamicIcon from "@/components/DynamicIcon"
+import Header from "@/components/Header.astro"
+import Start from "@/components/Start"
+import games from "@/data/games.json"
+import { Users } from "lucide-react"
+
+export function getStaticPaths() {
+  return games.map((game) => ({
+    params: { game: game.path },
+    props: { game },
+  }))
+}
+
+const { game } = Astro.props
+---
+
+<Layout>
+  <Header back={true} />
+  <div
+    class="mx-auto mt-8 flex w-fit items-center justify-center gap-4 border-b-4 pb-1"
+  >
+    <DynamicIcon name={game.icon} size={28} />
+    <span class="text-2xl font-medium">{game.name}</span>
+  </div>
+  <div
+    class="text-muted-foreground flex items-center justify-center gap-2 py-4 text-sm"
+  >
+    <Users size={18} /> 适合{`${game.min}-${game.max}人`}
+  </div>
+  <Start game={game} client:load />
+</Layout>

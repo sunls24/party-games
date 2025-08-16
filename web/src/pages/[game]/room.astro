@@ -1,0 +1,17 @@
+---
+import Gsswd from "@/components/games/Gsswd"
+import Gyyl from "@/components/games/Gyyl"
+import games from "@/data/games.json"
+import Layout from "@/layouts/Layout.astro"
+
+export function getStaticPaths() {
+  return games.map((game) => ({ params: { game: game.path }, props: { game } }))
+}
+
+const { game } = Astro.props
+---
+
+<Layout>
+  {game.path === "/sswd" && <Gsswd game={game} client:load />}
+  {game.path === "/yyl" && <Gyyl game={game} client:load />}
+</Layout>

@@ -1,0 +1,23 @@
+---
+import DynamicIcon from "@/components/DynamicIcon"
+import Header from "@/components/Header.astro"
+import games from "@/data/games.json"
+import Layout from "@/layouts/Layout.astro"
+---
+
+<Layout>
+  <Header />
+  <div class="grid grid-cols-2 gap-4 p-4">
+    {
+      games.map((game) => (
+        <a
+          href={game.path == "/more" ? "" : game.path}
+          class="flex justify-around rounded-md border p-4 font-medium shadow-xs"
+        >
+          <DynamicIcon name={game.icon} />
+          {game.name}
+        </a>
+      ))
+    }
+  </div>
+</Layout>

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "谁是卧底",
+    "icon": "MessageCircleQuestionMark",
+    "path": "/sswd",
+    "min": 4,
+    "max": 12
+  },
+  {
+    "name": "一夜狼",
+    "icon": "MoonStar",
+    "path": "/yyl",
+    "min": 3,
+    "max": 12
+  },
+  {
+    "name": "更多开发中",
+    "icon": "CircleEllipsis",
+    "path": "/more",
+    "min": 0,
+    "max": 0
+  }
+]
