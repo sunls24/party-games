@@ -1,0 +1,21 @@
+---
+import Back from "@/components/Back"
+import UserAvatar from "@/components/UserAvatar"
+import { Gamepad2 } from "lucide-react"
+
+const { back = false } = Astro.props
+---
+
+<header
+  class="bg-secondary sticky top-0 flex border-b p-3 font-medium shadow-xs backdrop-blur-md"
+>
+  <div class="flex-1">
+    {back && <Back href="/" client:load />}
+  </div>
+  <div class="flex h-8 flex-1 items-center justify-center gap-2">
+    <Gamepad2 />聚会小游戏
+  </div>
+  <div class="flex flex-1 justify-end">
+    <UserAvatar client:load />
+  </div>
+</header>
