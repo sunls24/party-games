@@ -1,0 +1,39 @@
+---
+import DynamicIcon from "@/components/DynamicIcon"
+import Header from "@/components/Header.astro"
+import games from "@/data/games.json"
+import Layout from "@/layouts/Layout.astro"
+import { GITHUB_URL, VERSION } from "@/lib/contants"
+import { Construction, Github } from "lucide-react"
+---
+
+<Layout>
+  <Header />
+  <div class="grid grid-cols-2 gap-4 p-4">
+    {
+      games.map((conf) => (
+        <a
+          href={conf.done ? conf.path : ""}
+          class="relative flex justify-around rounded-md border p-4 font-medium shadow-xs"
+        >
+          <DynamicIcon name={conf.icon} />
+          {conf.name}
+          {!conf.done && (
+            <div class="text-muted-foreground absolute right-1 bottom-0.5 flex items-center gap-1 text-xs">
+              <Construction size={14} /> 施工中
+            </div>
+          )}
+        </a>
+      ))
+    }
+  </div>
+  <footer class="flex justify-center border-t border-dashed p-4">
+    <a
+      target="_blank"
+      href={GITHUB_URL}
+      class="flex items-center gap-1 text-sm font-medium underline underline-offset-4"
+    >
+      <Github size={16} />{VERSION}
+    </a>
+  </footer>
+</Layout>

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "谁是卧底",
+    "icon": "MessageCircleQuestionMark",
+    "path": "sswd",
+    "done": true,
+    "min": 4,
+    "max": 12
+  },
+  {
+    "name": "五子棋",
+    "icon": "Joystick",
+    "path": "wzq",
+    "min": 2,
+    "max": 2
+  },
+  {
+    "name": "一夜狼",
+    "icon": "MoonStar",
+    "path": "yyl",
+    "min": 3,
+    "max": 12
+  }
+]

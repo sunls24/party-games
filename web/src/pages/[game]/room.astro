@@ -1,0 +1,33 @@
+---
+import DynamicIcon from "@/components/DynamicIcon"
+import Gsswd from "@/components/games/Gsswd"
+import Gyyl from "@/components/games/Gyyl"
+import games from "@/data/games.json"
+import Layout from "@/layouts/Layout.astro"
+
+export function getStaticPaths() {
+  return games.map((conf) => ({
+    params: { game: conf.path },
+    props: { conf },
+  }))
+}
+
+const { conf } = Astro.props
+---
+
+<Layout>
+  {
+    conf.path === "sswd" && (
+      <Gsswd conf={conf} client:load>
+        <DynamicIcon name={conf.icon} size={18} />
+      </Gsswd>
+    )
+  }
+  {
+    conf.path === "yyl" && (
+      <Gyyl conf={conf} client:load>
+        <DynamicIcon name={conf.icon} size={18} />
+      </Gyyl>
+    )
+  }
+</Layout>
