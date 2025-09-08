@@ -1,10 +1,12 @@
+import Alarm from "@/components/Alarm"
 import Game from "@/components/games/Game"
+import OfflineTip from "@/components/OfflineTip"
 import RoomUser from "@/components/RoomUser"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { $game, $room, $user } from "@/lib/store/store"
 import type { GameConf } from "@/lib/types"
-import { longPoll, request, requestErr, requestStream } from "@/lib/utils"
+import { request, requestErr, requestStream } from "@/lib/utils"
 import { useStore } from "@nanostores/react"
 import clsx from "clsx"
 import {
@@ -27,12 +29,7 @@ function Gsswd({ conf, children }: { conf: GameConf; children: ReactNode }) {
     <Game
       conf={conf}
       icon={children}
-      settings={
-        <div className="text-muted-foreground flex items-center gap-1 text-sm">
-          <BadgeInfo size={18} />
-          此游戏需要发言，推荐线下玩
-        </div>
-      }
+      settings={<OfflineTip />}
       settingsBody={{}}
       loading={loading}
       setLoading={setLoading}
@@ -89,20 +86,6 @@ function Body() {
     }
   }, [game.state])
 
-  const signalRef = useRef(new AbortController())
-
-  useEffect(() => {
-    longPoll(
-      signalRef.current.signal,
-      () => `/api/game/long?id=${room.id}&version=${$game.get().version ?? 0}`,
-      (data) => $game.set(data)
-    ).catch(requestErr)
-    return () => {
-      signalRef.current.abort()
-      $game.set({})
-    }
-  }, [])
-
   function onNextStage() {
     if (loading) {
       return
@@ -140,6 +123,9 @@ function Body() {
       .finally(() => setLoading(false))
       .catch(requestErr)
   }
+
+  const signalRef = useRef(new AbortController())
+  useEffect(() => signalRef.current.abort(), [])
 
   function onAIHelp() {
     if (loadingAI) {
@@ -200,11 +186,7 @@ function Body() {
                 !game.state.voteDone &&
                 !game.state?.players[i].out &&
                 !game.state?.players[i].tie &&
-                game.state?.players[i].vote < 0 && (
-                  <div className="absolute -top-1.5 -right-1.5 animate-bounce">
-                    ⏰
-                  </div>
-                )}
+                game.state?.players[i].vote < 0 && <Alarm />}
             </RoomUser>
 
             {game.state && (u.id === user.id || result.gameOver) ? (

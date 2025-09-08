@@ -1,4 +1,3 @@
-import { ABORT_SAFE } from "@/lib/contants"
 import { clsx, type ClassValue } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -65,7 +64,7 @@ export async function requestStream(
 }
 
 function isAbort(err: any) {
-  return err === ABORT_SAFE || err.name === "AbortError"
+  return err.name === "AbortError"
 }
 
 export function requestErr(err: any) {
