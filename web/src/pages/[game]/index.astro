@@ -28,7 +28,9 @@ const { conf } = Astro.props
   <div
     class="text-muted-foreground flex items-center justify-center gap-2 py-5 text-sm"
   >
-    <Users size={18} /> 适合{`${conf.min}-${conf.max}人`}
+    <Users size={18} /> 适合{
+      conf.min == conf.max ? conf.max : `${conf.min}-${conf.max}`
+    }人
   </div>
   <Start conf={conf} client:load />
 </Layout>

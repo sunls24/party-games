@@ -1,6 +1,7 @@
 ---
 import DynamicIcon from "@/components/DynamicIcon"
 import Gsswd from "@/components/games/Gsswd"
+import Gwzq from "@/components/games/Gwzq"
 import Gyyl from "@/components/games/Gyyl"
 import games from "@/data/games.json"
 import Layout from "@/layouts/Layout.astro"
@@ -28,6 +29,13 @@ const { conf } = Astro.props
       <Gyyl conf={conf} client:load>
         <DynamicIcon name={conf.icon} size={18} />
       </Gyyl>
+    )
+  }
+  {
+    conf.path === "wzq" && (
+      <Gwzq conf={conf} client:load>
+        <DynamicIcon name={conf.icon} size={18} />
+      </Gwzq>
     )
   }
 </Layout>

@@ -2,9 +2,9 @@ import RoomHeader from "@/components/RoomHeader"
 import Seat from "@/components/Seat"
 import { $game, $room, $user } from "@/lib/store/store"
 import type { GameConf } from "@/lib/types"
-import { request, requestErr } from "@/lib/utils"
+import { longPoll, request, requestErr } from "@/lib/utils"
 import { useStore } from "@nanostores/react"
-import { type ReactNode } from "react"
+import { useEffect, useRef, type ReactNode } from "react"
 
 function Game({
   conf,
@@ -56,7 +56,7 @@ function Game({
         }
       />
       {room.started ? (
-        children
+        <Body>{children}</Body>
       ) : (
         <Seat conf={conf} startGame={startGame} loading={loading}>
           <div className="flex flex-col items-center border-t border-dashed pt-4">
@@ -69,3 +69,20 @@ function Game({
 }
 
 export default Game
+
+function Body({ children }: { children: ReactNode }) {
+  const signalRef = useRef(new AbortController())
+  useEffect(() => {
+    longPoll(
+      signalRef.current.signal,
+      () =>
+        `/api/game/long?id=${$room.get().id}&version=${$game.get().version ?? 0}`,
+      (data) => $game.set(data)
+    ).catch(requestErr)
+    return () => {
+      signalRef.current.abort()
+      $game.set({})
+    }
+  }, [])
+  return children
+}

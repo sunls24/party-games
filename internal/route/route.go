@@ -5,6 +5,7 @@ import (
 	"party-games/internal/api/base"
 	"party-games/internal/api/game"
 	"party-games/internal/api/game/sswd"
+	"party-games/internal/api/game/wzq"
 	"party-games/internal/api/room"
 	"party-games/internal/api/user"
 
@@ -33,4 +34,9 @@ func Register(e *echo.Echo) {
 	sswdR.POST("/vote", api.Wrap(sswd.Vote))
 	sswdR.POST("/stage", api.Wrap(sswd.NextStage))
 	sswdR.GET("/help", api.Wrap(sswd.Help))
+
+	wzqR := g.Group("/wzq")
+	wzqR.POST("/chess", api.Wrap(wzq.Chess))
+	wzqR.POST("/regret", api.Wrap(wzq.Regret))
+	wzqR.POST("/regret/action", api.Wrap(wzq.RegretAction))
 }
