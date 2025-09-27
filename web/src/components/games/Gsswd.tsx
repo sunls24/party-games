@@ -125,7 +125,7 @@ function Body() {
   }
 
   const signalRef = useRef(new AbortController())
-  useEffect(() => signalRef.current.abort(), [])
+  useEffect(() => signalRef.current.abort, [])
 
   function onAIHelp() {
     if (loadingAI) {
